@@ -187,3 +187,9 @@ font: inherit;
 .formulario input[type="checkbox"] {
 width: auto;
 }
+
+.pie-sitio {
+padding: 1rem max(1rem, calc((100% - var(--ancho-contenido)) / 2));
+color: #ffffff;
+background: var(--color-primario-oscuro);
+}
