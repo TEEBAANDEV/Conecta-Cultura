@@ -66,5 +66,32 @@ return false;
 return true;
 }
 
+function validarContrasena(valor) {
+limpiarError(contrasena, "error-contrasena");
+if (valor.length < 6 || valor.length > 12) {
+mostrarError(
+contrasena,
+"error-contrasena",
+"Debe contener entre 6 y 12 caracteres"
+);
+return false;
+}
+return true;
+}
+function validarFecha(valor) {
+limpiarError(fechaNacimiento, "error-fecha");
+if (valor === "") {
+mostrarError(fechaNacimiento, "error-fecha", "Selecciona una fecha");
+return false;
+}
+const fechaIngresada = new Date(`${valor}T00:00:00`);
+const hoy = new Date();
+if (fechaIngresada > hoy) {
+mostrarError(fechaNacimiento, "error-fecha", "La fecha no puede ser futura");
+return false;
+}
+return true;
+}
+
 formulario.addEventListener("submit", procesarRegistro);
 
