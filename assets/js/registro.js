@@ -1,4 +1,6 @@
 const formulario = document.querySelector("#formulario-registro");
+
+
 function procesarRegistro(evento) {
     evento.preventDefault();
 
@@ -29,6 +31,39 @@ const salida = document.querySelector(`#${idError}`);
 salida.textContent = "";
 control.classList.remove("campo-invalido");
 control.removeAttribute("aria-invalid");
+}
+
+function validarNombre(valor) {
+limpiarError(nombre, "error-nombre");
+if (valor === "") {
+mostrarError(nombre, "error-nombre", "El nombre es obligatorio");
+return false;
+}
+if (valor.length > 50) {
+mostrarError(nombre, "error-nombre", "Máximo 50 caracteres");
+return false;
+}
+return true;
+}
+
+function validarCorreo(valor) {
+limpiarError(correo, "error-correo");
+if (valor === "") {
+mostrarError(correo, "error-correo", "El correo es obligatorio");
+return false;
+}
+if (!valor.includes("@")) {
+mostrarError(correo, "error-correo", "El correo debe contener @");
+return false;
+}
+const dominioPermitido =
+valor.endsWith("@duocuc.cl") ||
+valor.endsWith("@profesor.duoc.cl");
+if (!dominioPermitido) {
+mostrarError(correo, "error-correo", "Utiliza un dominio institucional");
+return false;
+}
+return true;
 }
 
 formulario.addEventListener("submit", procesarRegistro);
