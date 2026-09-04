@@ -93,5 +93,31 @@ return false;
 return true;
 }
 
+function validarRut(valor) {
+limpiarError(rut, "error-rut");
+const formatoRut = /^[0-9]{7,8}[0-9Kk]$/;
+if (!formatoRut.test(valor)) {
+mostrarError(rut, "error-rut", "Escribe el RUT sin puntos ni guion");
+return false;
+}
+const cuerpo = valor.slice(0, -1);
+const digitoIngresado = valor.slice(-1).toUpperCase();
+let suma = 0;
+let multiplicador = 2;
+for (let posicion = cuerpo.length - 1; posicion >= 0; posicion--) {
+suma = suma + Number(cuerpo[posicion]) * multiplicador;
+multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+}
+const resto = 11 - (suma % 11);
+let digitoCalculado = String(resto);
+if (resto === 11) digitoCalculado = "0";
+if (resto === 10) digitoCalculado = "K";
+if (digitoIngresado !== digitoCalculado) {
+mostrarError(rut, "error-rut", "El dígito verificador no es correcto");
+return false;
+}
+return true;
+}
+
 formulario.addEventListener("submit", procesarRegistro);
 
